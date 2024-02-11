@@ -1,17 +1,30 @@
 package com.example.myluxqcm
 
+import GridSelectionScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+
 
 @Composable
 fun NavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "questionScreen") {
-        composable("questionScreen") {
-            QuestionScreen(navController = navController)
+    NavHost(navController = navController, startDestination = "selectionList") {
+        composable("selectionList") {
+            SelectionListScreen(navController)
         }
-        // Ajoutez ici d'autres destinations si nécessaire
+        composable("gridSelection/{questionIndex}") { backStackEntry ->
+            val questionIndex = backStackEntry.arguments?.getString("questionIndex")?.toIntOrNull() ?: 0
+            GridSelectionScreen(navController, questionIndex)
+        }
+        composable("confirmation/{isCorrect}") { backStackEntry ->
+            val isCorrect = backStackEntry.arguments?.getString("isCorrect")?.toBoolean() ?: false
+            ConfirmationScreen(navController, isCorrect)
+        }
+
+        composable("result/{isCorrect}") { backStackEntry ->
+            val isCorrect = backStackEntry.arguments?.getString("isCorrect")?.toBoolean() ?: false
+            ResultScreen(navController, isCorrect)
+        }
     }
 }

@@ -15,10 +15,9 @@ import androidx.navigation.NavHostController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ResultScreen(navController: NavHostController, isCorrect: Boolean) {
-
+fun ConfirmationScreen(navController: NavHostController, isCorrect: Boolean) {
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Résultat") }) },
+        topBar = { TopAppBar(title = { Text("Confirmation") }) },
         content = { padding ->
             Column(
                 modifier = Modifier
@@ -29,15 +28,15 @@ fun ResultScreen(navController: NavHostController, isCorrect: Boolean) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = if (isCorrect) "Félicitations, vous avez la bonne réponse!" else "Incorrect, veuillez réessayer.",
+                    text = if (isCorrect) "Bonne réponse!" else "Mauvaise réponse. Essayez encore.",
                     style = MaterialTheme.typography.headlineMedium
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 Button(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                    onClick = { navController.navigate("selectionList") }
+                    onClick = { navController.navigate("result/$isCorrect") }
                 ) {
-                    Text("Recommencer")
+                    Text("Voir Résultat")
                 }
             }
         }
